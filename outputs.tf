@@ -18,3 +18,10 @@ output "alternate_ip_addresses" {
     vsphere_virtual_machine.virtual_machine_ovf.*.guest_ip_addresses
   ]))
 }
+
+output "hostname" {
+  value = flatten(tolist(
+          vsphere_virtual_machine.virtual_machine_linux.*.name,
+          vsphere_virtual_machine.virtual_machine_ovf.*.name
+  ))
+}

@@ -1,5 +1,5 @@
 module "virtual_machine" {
-  source = "/home/admin/projects/terraform/modules/vsphere/vm"
+  source = "git@github.com:p5/terraform-vsphere-vm.git"
 
   datacenter = var.datacenter
   datastore = var.datastore
