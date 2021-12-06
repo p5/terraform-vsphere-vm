@@ -2,6 +2,7 @@ package test
 
 import (
 	"fmt"
+	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/retry"
 	"github.com/gruntwork-io/terratest/modules/ssh"
 	"github.com/gruntwork-io/terratest/modules/terraform"
@@ -37,6 +38,8 @@ func testSSHUserPass(t *testing.T, terraformOptions *terraform.Options, username
 			return "", fmt.Errorf("Expected SSH command to return '%s' but got '%s'", expectedText, actualText)
 		}
 
+		logger.Log(t, fmt.Sprintf("Successfully SSH'd to host %s", host.Hostname))
+		logger.Log(t, fmt.Sprintf("SSH command returned: %s", actualText))
 		return "", nil
 	})
 }

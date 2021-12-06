@@ -24,19 +24,23 @@ func Test(t *testing.T) {
 		*/
 	}
 
-	examples := map[string]*terraform.Options{}
+	tests := map[string]*terraform.Options{}
 
 	// Configure each test
 	for _, folder := range exampleFolders {
 		options := configureTerraformOptions(t, folder)
-		teststructure.SaveTerraformOptions(t, folder, options)
-		examples[folder] = options
+		tests[folder] = options
 	}
 
 	// Run each test
-	for folder, options := range examples {
-		RunTest(t, folder, options)
+	for folder, options := range tests {
+		options := options
+		t.Run(options.TerraformDir, func(t *testing.T) {
+			t.Parallel()
+			RunTest(t, folder, options)
+		})
 	}
+
 }
 
 func RunTest(t *testing.T, folder string, options *terraform.Options) {
